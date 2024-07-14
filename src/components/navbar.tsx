@@ -4,6 +4,7 @@ import Link from "next/link";
 // import { getCurrentUser } from "@/lib/get-current-user";
 
 import Menu from "./menu";
+import NewPostButton from "./new-post-button";
 // import NewPostButton from "./new-post-button";
 
 const Navbar = async () => {
@@ -17,7 +18,7 @@ const Navbar = async () => {
         </Link>
 
         <div className="flex items-center gap-4">
-          {/* {user && <NewPostButton />} */}
+          {user && <NewPostButton />}
           <Menu user={user} />
         </div>
       </div>
