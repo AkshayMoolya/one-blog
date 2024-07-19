@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type FormProps = {
   post: Post;
@@ -36,10 +37,49 @@ const Form = (props: FormProps) => {
   const [visibility, setVisibility] = React.useState<Visibility>(
     post.visibility
   );
-  const [saving, setSaving] = React.useState(false);
-  const [publishing, setPublishing] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const saveMutation = useMutation({
+    mutationFn: (published: boolean) =>
+      savePost(post.id, title, content, description, published),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["post"],
+      });
+      toast({
+        title: "Post saved",
+        description: "Your changes have been saved",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "An error occurred",
+        description: error.message,
+      });
+    },
+  });
+
+  const visibilityMutation = useMutation({
+    mutationFn: () => saveVisibility(post.id, visibility),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["post"],
+      });
+      toast({
+        title: "Settings saved",
+        description: "Your changes have been saved",
+      });
+      setOpen(false);
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "An error occurred",
+        description: error.message,
+      });
+    },
+  });
 
   const handleSave = async () => {
     if (!title) {
@@ -49,39 +89,11 @@ const Form = (props: FormProps) => {
       });
     }
 
-    setSaving(true);
-
-    try {
-      await savePost(post.id, title, content, description, false);
-      toast({
-        title: "Post saved",
-        description: "Your changes have been saved",
-      });
-      return setSaving(false);
-    } catch (error) {
-      toast({
-        title: "An error occurred",
-        description: (error as Error).message,
-      });
-      setSaving(false);
-    }
+    saveMutation.mutate(false);
   };
 
   const handleSaveSettingsIcon = async () => {
-    try {
-      await saveVisibility(post.id, visibility);
-      toast({
-        title: "Settings saved",
-        description: "Your changes have been saved",
-      });
-
-      setOpen(false);
-    } catch (error) {
-      toast({
-        title: "An error occurred",
-        description: (error as Error).message,
-      });
-    }
+    visibilityMutation.mutate();
   };
 
   const handlePublish = async () => {
@@ -92,23 +104,11 @@ const Form = (props: FormProps) => {
       });
     }
 
-    setPublishing(true);
-
-    try {
-      await savePost(post.id, title, content, description, true);
-      toast({
-        title: "Post published",
-        description: "Your post is now live",
-      });
-      setPublishing(false);
-      return router.push(`/posts/${post.id}`);
-    } catch (error) {
-      toast({
-        title: "An error occurred",
-        description: (error as Error).message,
-      });
-      setPublishing(false);
-    }
+    saveMutation.mutate(true, {
+      onSuccess: () => {
+        router.push(`/posts/${post.id}`);
+      },
+    });
   };
 
   return (
@@ -184,15 +184,15 @@ const Form = (props: FormProps) => {
           )}
         >
           {!post.published && (
-            <Button onClick={handleSave} disabled={saving}>
-              {saving && (
+            <Button onClick={handleSave} disabled={saveMutation.isPending}>
+              {saveMutation.isPending && (
                 <Loader2Icon size={16} className="mr-2 animate-spin" />
               )}
               Save as draft
             </Button>
           )}
-          <Button onClick={handlePublish} disabled={publishing}>
-            {publishing && (
+          <Button onClick={handlePublish} disabled={saveMutation.isPending}>
+            {saveMutation.isPending && (
               <Loader2Icon size={16} className="mr-2 animate-spin" />
             )}
             Publish
