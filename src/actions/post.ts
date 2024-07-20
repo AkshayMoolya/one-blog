@@ -206,3 +206,45 @@ export const getPostById = async (id: string) => {
     handleError();
   }
 };
+
+export const getUserPosts = async (id: string) => {
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("User not found");
+
+  try {
+    const posts = await db.post.findMany({
+      where: {
+        authorId: user.id,
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        published: true,
+        createdAt: true,
+        likes: {
+          select: {
+            id: true,
+          },
+        },
+        author: {
+          select: {
+            name: true,
+            image: true,
+            id: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    if (!posts) throw new Error("Posts not found");
+
+    return posts;
+  } catch {
+    handleError();
+  }
+};

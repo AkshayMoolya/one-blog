@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/lib/get-current-user";
-import UserPost from "./_components/user-post";
+import UserPost from "./_components/blog-card";
 
 type PostPageProps = {
   params: {

@@ -18,8 +18,7 @@ interface userPostProps {
   id: string;
   user: User;
 }
-
-const UserPost = ({ id, user }: userPostProps) => {
+const Blogcard = ({ id, user }: userPostProps) => {
   console.log(id);
   const { data, isLoading, error } = useQuery({
     queryKey: ["getpostbyid", id],
@@ -74,4 +73,4 @@ const UserPost = ({ id, user }: userPostProps) => {
   );
 };
 
-export default UserPost;
+export default Blogcard;
