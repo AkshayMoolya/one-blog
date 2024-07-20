@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 
 import db from "@/lib/db";
 import { getCurrentUser } from "@/lib/get-current-user";
+import { ApiError } from "next/dist/server/api-utils";
 
 const handleError = () => {
   throw new Error("Something went wrong. Please try again.");
@@ -106,6 +107,101 @@ export const saveVisibility = async (id: string, visibility: Visibility) => {
     });
 
     revalidatePath(`/posts/${id}`);
+  } catch {
+    handleError();
+  }
+};
+
+export const likePost = async (id: string) => {
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("Please log in to like this post.");
+
+  try {
+    await db.like.create({
+      data: {
+        postId: id,
+        userId: user.id,
+      },
+    });
+
+    revalidatePath(`/posts/${id}`);
+  } catch {
+    revalidatePath(`/posts/${id}`);
+    handleError();
+  }
+};
+
+export const unlikePost = async (id: string) => {
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("Please log in to unlike this post.");
+
+  try {
+    const like = await db.like.findFirst({
+      where: {
+        postId: id,
+        userId: user.id,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!like) throw new Error("You have not liked this post.");
+
+    await db.like.delete({
+      where: {
+        id: like?.id,
+      },
+    });
+
+    revalidatePath(`/posts/${id}`);
+  } catch {
+    revalidatePath(`/posts/${id}`);
+    handleError();
+  }
+};
+
+export const getPostById = async (id: string) => {
+  console.log(
+    " cdjscdj djcnscd cdclndc cdlcnsc dlcndcldc dlcndlc cdlcndcl cdlcn"
+  );
+  const user = await getCurrentUser();
+
+  if (!user) throw new Error("Please log in to view this post");
+  try {
+    const post = await db.post.findUnique({
+      where: {
+        id: id,
+        published: true,
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        content: true,
+        createdAt: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+            image: true,
+          },
+        },
+        likes: {
+          select: {
+            id: true,
+            userId: true,
+            postId: true,
+          },
+        },
+      },
+    });
+
+    if (!post) throw new Error("Post not found");
+
+    return post;
   } catch {
     handleError();
   }

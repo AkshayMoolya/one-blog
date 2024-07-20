@@ -24,6 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Editor from "./editor";
 
 type FormProps = {
   post: Post;
@@ -177,6 +178,10 @@ const Form = (props: FormProps) => {
             setContent(editor.storage.markdown.getMarkdown() as string);
           }}
         /> */}
+        <Editor
+          value={content}
+          onChange={(value: string) => setContent(value)}
+        />
         <div
           className={cn(
             "flex",
