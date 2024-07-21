@@ -38,7 +38,7 @@ const Posts = ({ user }: PostsProps) => {
   return (
     <div>
       {data.map((post) => (
-        <PostCard key={post.id} post={post} user={user} />
+        <PostCard key={post.id} post={post} user={user} queryKey={"posts"} />
       ))}
     </div>
   );

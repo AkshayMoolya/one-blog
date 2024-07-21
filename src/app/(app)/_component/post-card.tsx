@@ -22,10 +22,11 @@ export type PostCardProps = {
   };
   user?: User | null;
   showAuthor?: boolean;
+  queryKey: string;
 };
 
 const PostCard = (props: PostCardProps) => {
-  const { post, user, showAuthor = true } = props;
+  const { post, user, showAuthor = true, queryKey } = props;
   const { id, title, description, published, createdAt, likes, author } = post;
 
   return (
@@ -64,7 +65,13 @@ const PostCard = (props: PostCardProps) => {
           {likes.length}
         </div>
       </div>
-      <Controls user={user} id={id} authorId={author.id} postTitle={title} />
+      <Controls
+        user={user}
+        id={id}
+        authorId={author.id}
+        postTitle={title}
+        querykey={queryKey}
+      />
     </article>
   );
 };

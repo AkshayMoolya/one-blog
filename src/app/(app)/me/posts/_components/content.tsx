@@ -48,7 +48,13 @@ const Content = (props: ContentProps) => {
           </div>
         )}
         {drafts.map((post) => (
-          <PostCard key={post.id} post={post} user={user} showAuthor={false} />
+          <PostCard
+            key={post.id}
+            post={post}
+            user={user}
+            showAuthor={false}
+            queryKey="user-posts"
+          />
         ))}
       </TabsContent>
       <TabsContent value="published">
@@ -58,7 +64,13 @@ const Content = (props: ContentProps) => {
           </div>
         )}
         {published.map((post) => (
-          <PostCard key={post.id} post={post} user={user} showAuthor={false} />
+          <PostCard
+            key={post.id}
+            post={post}
+            user={user}
+            showAuthor={false}
+            queryKey="user-posts"
+          />
         ))}
       </TabsContent>
     </Tabs>

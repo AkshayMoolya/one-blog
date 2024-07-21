@@ -53,6 +53,8 @@ export const deletePost = async (id: string) => {
     });
 
     revalidatePath("/me/posts");
+
+    return;
   } catch {
     handleError();
   }

@@ -13,6 +13,7 @@ import LikeButton from "@/components/shared/like-button";
 import { getPostById } from "@/actions";
 import PostPlaceholder from "@/components/post-placeholder";
 import UserPostPlaceholder from "@/components/user-post-placeholder";
+import { notFound } from "next/navigation";
 
 interface userPostProps {
   id: string;
@@ -27,7 +28,9 @@ const Blogcard = ({ id, user }: userPostProps) => {
 
   if (error) {
     console.error("Error fetching post:", error);
-    return <div>Error loading post. Please try again later.</div>;
+
+    // give a msg to the user that the post is not found
+    return notFound();
   }
 
   if (!data) {
@@ -43,7 +46,13 @@ const Blogcard = ({ id, user }: userPostProps) => {
     <>
       <div className="flex items-center justify-between">
         <Back />
-        <Controls id={id} user={user} authorId={author.id} postTitle={title} />
+        <Controls
+          id={id}
+          user={user}
+          authorId={author.id}
+          postTitle={title}
+          querykey="posts"
+        />
       </div>
       <div className="my-8">
         <h1 className="text-2xl font-bold sm:text-3xl">{title}</h1>

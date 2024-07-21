@@ -36,17 +36,21 @@ type ControlsProps = {
   user: User | null | undefined;
   authorId: string;
   postTitle: string;
+  querykey: string;
 };
 
 const Controls = (props: ControlsProps) => {
-  const { id, user, authorId, postTitle } = props;
+  const { id, user, authorId, postTitle, querykey } = props;
   const [open, setOpen] = React.useState(false);
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: (id: string) => deletePost(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [`${querykey}`],
+        refetchType: "active",
+      });
       toast({
         title: "Post Deleted",
         description: "The post has been deleted successfully",

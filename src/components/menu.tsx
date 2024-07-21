@@ -14,12 +14,22 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { buttonVariants } from "./ui/button";
 import { signOut } from "next-auth/react";
+import { useTheme } from "next-themes";
 
 type MenuProps = {
   user: User | undefined;
 };
 
 const Menu = (props: MenuProps) => {
+  const { theme, setTheme } = useTheme();
+
+  const switchTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
   const { user } = props;
   const pathname = usePathname();
 
@@ -37,7 +47,11 @@ const Menu = (props: MenuProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src={image as string} alt={name as string} />
+          <AvatarImage
+            src={image as string}
+            alt={name as string}
+            className="object-cover"
+          />
           <AvatarFallback>
             <UserIcon size={24} />
           </AvatarFallback>
@@ -57,7 +71,11 @@ const Menu = (props: MenuProps) => {
         <DropdownMenuItem asChild>
           <Link href="/me/settings">Settings</Link>
         </DropdownMenuItem>
+        <DropdownMenuItem onClick={switchTheme}>
+          Switch Appearence
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
+
         <DropdownMenuItem onClick={() => signOut()}>Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
