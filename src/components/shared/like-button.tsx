@@ -70,6 +70,7 @@ const LikeButton = (props: LikeButtonProps) => {
       className={cn("flex items-center gap-2", !user && "cursor-not-allowed")}
       disabled={!user || isLoading}
       onClick={handleLike}
+      variant={"custom"}
     >
       <Heart
         size={20}

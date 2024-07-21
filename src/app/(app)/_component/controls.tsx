@@ -10,6 +10,7 @@ import Link from "next/link";
 import { type User } from "next-auth";
 import * as React from "react";
 import { SITE_URL } from "@/lib/constants";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
   DropdownMenu,
@@ -40,21 +41,30 @@ type ControlsProps = {
 const Controls = (props: ControlsProps) => {
   const { id, user, authorId, postTitle } = props;
   const [open, setOpen] = React.useState(false);
+  const queryClient = useQueryClient();
 
-  const handleDelete = async () => {
-    try {
-      await deletePost(id);
+  const { mutate, isPending } = useMutation({
+    mutationFn: (id: string) => deletePost(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
       toast({
-        title: "Post deleted",
-        description: "The post has been deleted.",
+        title: "Post Deleted",
+        description: "The post has been deleted successfully",
       });
-    } catch (error) {
+      setOpen(false);
+    },
+    onError: (error) => {
       toast({
-        title: "Failed to delete post",
-        description: (error as Error).message,
         variant: "destructive",
+        title: "Error",
+        description: "Failed to delete the post",
       });
-    }
+      console.error(error);
+    },
+  });
+
+  const handleDelete = () => {
+    mutate(id);
   };
 
   return (
@@ -100,8 +110,9 @@ const Controls = (props: ControlsProps) => {
               className={buttonVariants({
                 variant: "destructive",
               })}
+              disabled={isPending}
             >
-              Delete
+              {isPending ? "Deleting..." : "Delete"}
             </AlertDialogAction>
           </div>
         </AlertDialogContent>

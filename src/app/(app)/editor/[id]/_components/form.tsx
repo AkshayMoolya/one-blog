@@ -189,14 +189,23 @@ const Form = (props: FormProps) => {
           )}
         >
           {!post.published && (
-            <Button onClick={handleSave} disabled={saveMutation.isPending}>
+            <Button
+              variant={"custom"}
+              onClick={handleSave}
+              disabled={saveMutation.isPending}
+              className="bg-primary"
+            >
               {saveMutation.isPending && (
                 <Loader2Icon size={16} className="mr-2 animate-spin" />
               )}
               Save as draft
             </Button>
           )}
-          <Button onClick={handlePublish} disabled={saveMutation.isPending}>
+          <Button
+            variant={"custom"}
+            onClick={handlePublish}
+            disabled={saveMutation.isPending}
+          >
             {saveMutation.isPending && (
               <Loader2Icon size={16} className="mr-2 animate-spin" />
             )}

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
 import ReactQuill from "react-quill";
 import "../style.css";
 
 import "react-quill/dist/quill.snow.css";
+import styles from "../Editor.module.css";
 
 const Editor = ({ onChange, value }: any) => {
   const [mounted, setMounted] = useState(false);
@@ -30,7 +30,7 @@ const Editor = ({ onChange, value }: any) => {
   };
 
   return (
-    <div>
+    <div className={styles.quillWrapper}>
       {mounted && (
         <ReactQuill
           modules={modules}

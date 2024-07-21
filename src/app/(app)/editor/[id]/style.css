@@ -3,15 +3,20 @@
   min-height: 350px;
   border-radius: 4px;
   overflow: hidden;
+  /* border: 1px solid var(--border); */
 }
 .custom-editor .ql-editor {
   min-height: 350px; /* Match the height of the container */
 }
 
+.ql-tooltip.ql-editing {
+  left: 1px !important;
+}
+
 /* Style the toolbar */
 .custom-editor .ql-toolbar {
   border-bottom: 1px solid #ddd; /* Light border below the toolbar */
-  background-color: #f9f9f9; /* Light background color for the toolbar */
+  background-color: #f9f9f9;
   padding: 8px; /* Padding around the toolbar */
 }
 
@@ -36,6 +41,10 @@
 
 /* Customize dropdowns and input fields in the toolbar */
 .custom-editor .ql-toolbar .ql-picker {
-  border: 1px solid #ddd; /* Light border for pickers */
+  border: 1px solid hsl(var(--border)); /* Light border for pickers */
   border-radius: 4px; /* Rounded corners for pickers */
+}
+
+.custom-editor .ql-toolbar .ql-picke {
+  background-color: hsl(var(--background));
 }

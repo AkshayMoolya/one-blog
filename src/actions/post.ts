@@ -164,12 +164,6 @@ export const unlikePost = async (id: string) => {
 };
 
 export const getPostById = async (id: string) => {
-  console.log(
-    " cdjscdj djcnscd cdclndc cdlcnsc dlcndcldc dlcndlc cdlcndcl cdlcn"
-  );
-  const user = await getCurrentUser();
-
-  if (!user) throw new Error("Please log in to view this post");
   try {
     const post = await db.post.findUnique({
       where: {
@@ -232,6 +226,45 @@ export const getUserPosts = async (id: string) => {
           select: {
             name: true,
             image: true,
+            id: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    if (!posts) throw new Error("Posts not found");
+
+    return posts;
+  } catch {
+    handleError();
+  }
+};
+
+export const getPosts = async () => {
+  try {
+    const posts = await db.post.findMany({
+      where: {
+        published: true,
+        visibility: "PUBLIC",
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        createdAt: true,
+        published: true,
+        author: {
+          select: {
+            name: true,
+            image: true,
+            id: true,
+          },
+        },
+        likes: {
+          select: {
             id: true,
           },
         },

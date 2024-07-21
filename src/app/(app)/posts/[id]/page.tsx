@@ -13,10 +13,6 @@ const page = async (props: PostPageProps) => {
 
   const user = await getCurrentUser();
 
-  if (!user) {
-    throw new Error("User not found");
-  }
-
   return (
     <>
       <UserPost id={id} user={user} />

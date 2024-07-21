@@ -11,7 +11,7 @@ const Navbar = async () => {
   const user = await getCurrentUser();
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 bg-black/50 shadow-sm saturate-100 backdrop-blur-[10px]">
+    <header className="fixed inset-x-0 top-0 z-40 bg-background/50 shadow-sm saturate-100 backdrop-blur-[10px] ">
       <div className="mx-auto flex h-[60px] max-w-4xl items-center justify-between px-8">
         <Link href="/" className="text-lg font-bold">
           One Blog

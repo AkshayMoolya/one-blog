@@ -16,7 +16,7 @@ import UserPostPlaceholder from "@/components/user-post-placeholder";
 
 interface userPostProps {
   id: string;
-  user: User;
+  user: User | undefined;
 }
 const Blogcard = ({ id, user }: userPostProps) => {
   console.log(id);

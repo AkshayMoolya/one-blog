@@ -1,46 +1,43 @@
-// import PostCard from "@/components/post-card";
-import db from "@/lib/db";
-import { getCurrentUser } from "@/lib/get-current-user";
-import PostCard from "./post-card";
+"use client";
 
-const Posts = async () => {
-  const user = await getCurrentUser();
-  const posts = await db.post.findMany({
-    where: {
-      published: true,
-      visibility: "PUBLIC",
-    },
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      createdAt: true,
-      published: true,
-      author: {
-        select: {
-          name: true,
-          image: true,
-          id: true,
-        },
-      },
-      likes: {
-        select: {
-          id: true,
-        },
-      },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
+import { useQuery } from "@tanstack/react-query";
+import { getPosts } from "@/actions";
+import PostCard from "./post-card";
+import { type User } from "next-auth";
+import React from "react";
+import PostPlaceholder from "@/components/post-placeholder";
+
+interface PostsProps {
+  user: User | null | undefined;
+}
+
+const Posts = ({ user }: PostsProps) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["posts"],
+    queryFn: () => getPosts(),
   });
 
-  if (posts.length === 0) {
-    return <div className="text-center">No posts yet.</div>;
+  if (isLoading) {
+    return (
+      <>
+        {Array.from({ length: 10 }).map((_, i) => (
+          <PostPlaceholder key={i} />
+        ))}
+      </>
+    );
+  }
+
+  if (error) {
+    return <div>Error loading posts. Please try again later.</div>;
+  }
+
+  if (!data || data.length === 0) {
+    return <div>No posts found.</div>;
   }
 
   return (
     <div>
-      {posts.map((post) => (
+      {data.map((post) => (
         <PostCard key={post.id} post={post} user={user} />
       ))}
     </div>
