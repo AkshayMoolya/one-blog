@@ -1,6 +1,6 @@
 "use client";
 
-import { type Post, Visibility } from "@prisma/client";
+import { Post, Visibility } from "@prisma/client";
 
 import { Loader2Icon, SettingsIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -47,7 +47,7 @@ const Form = (props: FormProps) => {
       savePost(post.id, title, content, description, published),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["post"],
+        queryKey: ["posts"],
       });
       toast({
         title: "Post saved",

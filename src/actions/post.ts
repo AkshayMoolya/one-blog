@@ -7,7 +7,7 @@ import db from "@/lib/db";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { ApiError } from "next/dist/server/api-utils";
 
-const handleError = () => {
+const handleError = (error: any) => {
   throw new Error("Something went wrong. Please try again.");
 };
 
@@ -32,10 +32,8 @@ export const createNewPost = async (title: string) => {
     revalidatePath("/me/posts");
 
     return post.id;
-  } catch {
-    handleError();
-
-    return;
+  } catch (error: any) {
+    handleError(error);
   }
 };
 
@@ -45,18 +43,29 @@ export const deletePost = async (id: string) => {
   if (!user) throw new Error(NOT_LOGGED_IN_ERROR);
 
   try {
+    // First, fetch the post to check if the user is the author
+    const post = await db.post.findUnique({
+      where: { id },
+      select: { authorId: true },
+    });
+
+    if (!post) throw new Error("Post not found");
+
+    // Check if the user is the author or an admin
+    if (user.id !== post.authorId && !user.isAdmin) {
+      throw new Error("Unauthorized to delete this post");
+    }
+
+    // If the user is the author or an admin, proceed with deletion
     await db.post.delete({
-      where: {
-        id,
-        authorId: user.id,
-      },
+      where: { id },
     });
 
     revalidatePath("/me/posts");
 
     return;
-  } catch {
-    handleError();
+  } catch (error: any) {
+    handleError(error);
   }
 };
 
@@ -72,11 +81,22 @@ export const savePost = async (
   if (!user) throw new Error(NOT_LOGGED_IN_ERROR);
 
   try {
+    // First, fetch the post to check if it exists
+    const post = await db.post.findUnique({
+      where: { id },
+      select: { authorId: true },
+    });
+
+    if (!post) throw new Error("Post not found");
+
+    // Check if the user is the author or an admin
+    if (user.id !== post.authorId && !user.isAdmin) {
+      throw new Error("Unauthorized to edit this post");
+    }
+
+    // If the user is the author or an admin, proceed with the update
     await db.post.update({
-      where: {
-        id,
-        authorId: user.id,
-      },
+      where: { id },
       data: {
         title,
         content,
@@ -87,8 +107,8 @@ export const savePost = async (
     });
 
     revalidatePath(`/posts/${id}`);
-  } catch {
-    handleError();
+  } catch (error: any) {
+    handleError(error);
   }
 };
 
@@ -109,8 +129,8 @@ export const saveVisibility = async (id: string, visibility: Visibility) => {
     });
 
     revalidatePath(`/posts/${id}`);
-  } catch {
-    handleError();
+  } catch (error: any) {
+    handleError(error);
   }
 };
 
@@ -128,9 +148,8 @@ export const likePost = async (id: string) => {
     });
 
     revalidatePath(`/posts/${id}`);
-  } catch {
-    revalidatePath(`/posts/${id}`);
-    handleError();
+  } catch (error: any) {
+    handleError(error);
   }
 };
 
@@ -159,9 +178,8 @@ export const unlikePost = async (id: string) => {
     });
 
     revalidatePath(`/posts/${id}`);
-  } catch {
-    revalidatePath(`/posts/${id}`);
-    handleError();
+  } catch (error: any) {
+    handleError(error);
   }
 };
 
@@ -178,6 +196,10 @@ export const getPostById = async (id: string) => {
         description: true,
         content: true,
         createdAt: true,
+        visibility: true,
+        authorId: true,
+        updatedAt: true,
+        published: true,
         author: {
           select: {
             id: true,
@@ -195,11 +217,13 @@ export const getPostById = async (id: string) => {
       },
     });
 
-    if (!post) throw new Error("Post not found");
+    if (!post) {
+      throw new Error("Post not found");
+    }
 
     return post;
-  } catch {
-    handleError();
+  } catch (error: any) {
+    handleError(error);
   }
 };
 
@@ -240,8 +264,8 @@ export const getUserPosts = async (id: string) => {
     if (!posts) throw new Error("Posts not found");
 
     return posts;
-  } catch {
-    handleError();
+  } catch (error: any) {
+    handleError(error);
   }
 };
 
@@ -263,6 +287,7 @@ export const getPosts = async () => {
             name: true,
             image: true,
             id: true,
+            isAdmin: true,
           },
         },
         likes: {
@@ -279,7 +304,7 @@ export const getPosts = async () => {
     if (!posts) throw new Error("Posts not found");
 
     return posts;
-  } catch {
-    handleError();
+  } catch (error: any) {
+    handleError(error);
   }
 };

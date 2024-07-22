@@ -29,7 +29,6 @@ const EditorPage = async (props: EditorPageProps) => {
   const post = await db.post.findUnique({
     where: {
       id,
-      authorId: user.id,
     },
   });
 

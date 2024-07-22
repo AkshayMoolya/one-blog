@@ -1,7 +1,7 @@
 "use client";
 
 import { type Like, type Post } from "@prisma/client";
-import { HeartIcon } from "lucide-react";
+import { Crown, HeartIcon, Shield } from "lucide-react";
 import Link from "next/link";
 import { type User } from "next-auth";
 import * as React from "react";
@@ -18,7 +18,7 @@ export type PostCardProps = {
   > & {
     likes: Array<Pick<Like, "id">>;
   } & {
-    author: Pick<User, "name" | "image" | "id">;
+    author: Pick<User, "name" | "image" | "id" | "isAdmin">;
   };
   user?: User | null;
   showAuthor?: boolean;
@@ -40,13 +40,18 @@ const PostCard = (props: PostCardProps) => {
                 className="flex items-center gap-1 text-sm"
               >
                 <UserAvatar
-                  width={24}
-                  height={24}
                   userId={author.id}
                   src={author.image}
                   alt={author.name}
+                  className="w-6 h-6"
                 />
                 <span>{author.name}</span>
+                {author.isAdmin && (
+                  <Shield
+                    size={12}
+                    className="text-blue-400 fill-blue-400"
+                  />
+                )}
               </Link>
               <span>·</span>
             </>

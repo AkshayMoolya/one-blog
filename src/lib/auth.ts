@@ -20,6 +20,7 @@ export const authOptions: NextAuthOptions = {
       session.user.createdAt = user.createdAt;
       session.user.updatedAt = user.updatedAt;
       session.user.bio = user.bio;
+      session.user.isAdmin = user.isAdmin;
 
       return session;
     },

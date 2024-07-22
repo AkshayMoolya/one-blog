@@ -35,6 +35,8 @@ const Posts = ({ user }: PostsProps) => {
     return <div>No posts found.</div>;
   }
 
+  console.log(user?.isAdmin, "user");
+
   return (
     <div>
       {data.map((post) => (

@@ -44,6 +44,8 @@ const Controls = (props: ControlsProps) => {
   const [open, setOpen] = React.useState(false);
   const queryClient = useQueryClient();
 
+  console.log(user?.isAdmin);
+
   const { mutate, isPending } = useMutation({
     mutationFn: (id: string) => deletePost(id),
     onSuccess: async () => {
@@ -84,7 +86,7 @@ const Controls = (props: ControlsProps) => {
             <Share2Icon size={16} className="mr-2.5" />
             Share
           </DropdownMenuItem>
-          {user && user.id === authorId && (
+          {user && (user.isAdmin || user.id === authorId) && (
             <>
               <DropdownMenuItem asChild>
                 <Link href={`/editor/${id}`}>
