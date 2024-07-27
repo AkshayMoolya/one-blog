@@ -10,33 +10,6 @@ type UserPageProps = {
   };
 };
 
-export const generateMetadata = async (
-  props: UserPageProps
-): Promise<Metadata> => {
-  const { params } = props;
-  const id = params.id;
-  const user = await db.user.findUnique({
-    where: {
-      id,
-    },
-  });
-
-  if (!user) {
-    return {};
-  }
-
-  return {
-    title: user.name || user.id,
-    description: user.bio,
-    openGraph: {
-      title: user.name || user.id,
-      description: user.bio || undefined,
-      type: "profile",
-      url: `${SITE_URL}/users/${user.id}`,
-    },
-  };
-};
-
 const UserPage = async (props: UserPageProps) => {
   const { params } = props;
   const { id } = params;
