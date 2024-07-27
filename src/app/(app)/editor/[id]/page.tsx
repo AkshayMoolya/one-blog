@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
-
-import db from "@/lib/db";
+import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/get-current-user";
-
-import Form from "./_components/form";
 import FormWrapper from "./_components/form-warpper";
 
 interface EditorPageProps {

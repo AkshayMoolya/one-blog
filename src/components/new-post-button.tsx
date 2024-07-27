@@ -3,9 +3,6 @@
 import { Loader2Icon, PenSquareIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import * as React from "react";
-// import { toast } from "react-hot-toast";
-
-// import { createNewPost } from "@/actions";
 import { Button } from "./ui/button";
 import { createNewPost } from "@/actions";
 import { toast } from "./ui/use-toast";

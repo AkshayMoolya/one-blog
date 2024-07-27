@@ -75,6 +75,19 @@ const Menu = (props: MenuProps) => {
           Switch Appearence
         </DropdownMenuItem>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <a
+            target="_blank"
+            href="mailto:akshaymoolya88@gmail.com?subject=Bug%20Report%20for%20Threads%20Application"
+          >
+            Report a bug
+          </a>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <a target="_blank" href="https://Akshay33.vercel.app">
+            About Me
+          </a>
+        </DropdownMenuItem>
 
         <DropdownMenuItem onClick={() => signOut()}>Log out</DropdownMenuItem>
       </DropdownMenuContent>

@@ -6,6 +6,8 @@ import { revalidatePath } from "next/cache";
 import db from "@/lib/db";
 import { getCurrentUser } from "@/lib/get-current-user";
 
+// ignore eslint
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const handleError = (error: any) => {
   throw new Error("Something went wrong. Please try again." + error.message);
 };
@@ -187,7 +189,6 @@ export const getPostById = async (id: string) => {
     const post = await db.post.findUnique({
       where: {
         id: id,
-        published: true,
       },
       select: {
         id: true,
@@ -234,7 +235,7 @@ export const getUserPosts = async (id: string) => {
   try {
     const posts = await db.post.findMany({
       where: {
-        authorId: user.id,
+        authorId: id,
       },
       select: {
         id: true,
@@ -301,10 +302,58 @@ export const getPosts = async () => {
       },
     });
 
-    if (!posts) throw new Error("Posts not found");
-
     return posts;
   } catch (error: any) {
+    handleError(error);
+  }
+};
+
+export const getUsersPosts = async (id: string) => {
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        name: true,
+        image: true,
+        bio: true,
+        Post: {
+          where: {
+            published: true,
+            visibility: "PUBLIC",
+          },
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            published: true,
+            createdAt: true,
+            likes: {
+              select: {
+                id: true,
+              },
+            },
+            author: {
+              select: {
+                name: true,
+                image: true,
+                id: true,
+                isAdmin: true,
+              },
+            },
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
+      },
+    });
+
+    if (!user) throw new Error("User not found");
+
+    return user;
+  } catch (error) {
     handleError(error);
   }
 };

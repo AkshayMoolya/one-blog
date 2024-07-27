@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter, useSearchParams } from "next/navigation";
 import { type User } from "next-auth";
 import * as React from "react";
-import PostCard, { type PostCardProps } from "@/app/(app)/_component/post-card";
+import PostCard, { type PostCardProps } from "@/components/shared/post-card";
 
 interface ContentProps {
   posts: Array<PostCardProps["post"]>;

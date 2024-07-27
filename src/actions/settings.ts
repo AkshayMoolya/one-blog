@@ -4,8 +4,6 @@ import { formSchema } from "@/app/(app)/me/settings/_components/form";
 import db from "@/lib/db";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { z } from "zod";
-
-// import { type Values } from "../app/(app)/me/settings/_components/form";
 type Values = z.infer<typeof formSchema>;
 
 export const saveSettings = async (values: Values) => {

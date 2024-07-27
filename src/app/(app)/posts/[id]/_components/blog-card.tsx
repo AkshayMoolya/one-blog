@@ -1,6 +1,6 @@
 "use client";
 
-import Controls from "@/app/(app)/_component/controls";
+import Controls from "@/components/shared/controls";
 import Back from "@/components/back";
 import UserAvatar from "@/components/shared/user-avatar";
 import { formatPostDate } from "@/utilis/format-post-date";

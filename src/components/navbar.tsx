@@ -1,11 +1,7 @@
 import { getCurrentUser } from "@/lib/get-current-user";
 import Link from "next/link";
-
-// import { getCurrentUser } from "@/lib/get-current-user";
-
 import Menu from "./menu";
 import NewPostButton from "./new-post-button";
-// import NewPostButton from "./new-post-button";
 
 const Navbar = async () => {
   const user = await getCurrentUser();
