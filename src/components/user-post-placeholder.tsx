@@ -1,4 +1,3 @@
-import { MoreVerticalIcon } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
 
 const UserPostPlaceholder = () => (

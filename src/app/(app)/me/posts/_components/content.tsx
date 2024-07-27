@@ -6,10 +6,10 @@ import { type User } from "next-auth";
 import * as React from "react";
 import PostCard, { type PostCardProps } from "@/app/(app)/_component/post-card";
 
-type ContentProps = {
+interface ContentProps {
   posts: Array<PostCardProps["post"]>;
   user: User;
-};
+}
 
 const Content = (props: ContentProps) => {
   const { posts, user } = props;

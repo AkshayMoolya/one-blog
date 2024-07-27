@@ -7,7 +7,7 @@ import { Loader2Icon, UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type User } from "next-auth";
 import * as React from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -24,9 +24,9 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { saveSettings } from "@/actions";
 
-type FormProps = {
+interface FormProps {
   user: User;
-};
+}
 
 export const formSchema = z.object({
   image: z.string().url(),
@@ -73,7 +73,10 @@ const UserSettingsForm = ({ user }: FormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 shadow-md">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 shadow-md"
+      >
         <div className="space-y-4 rounded-lg border dark:bg-zinc-900/60 p-4">
           <h4 className="mb-6 text-2xl font-semibold">Account</h4>
           <Avatar className="size-24">

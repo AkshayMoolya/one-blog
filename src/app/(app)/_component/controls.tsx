@@ -31,13 +31,13 @@ import { copyUrl } from "@/utilis/copy-url";
 import { toast } from "@/components/ui/use-toast";
 import { deletePost } from "@/actions";
 
-type ControlsProps = {
+interface ControlsProps {
   id: string;
   user: User | null | undefined;
   authorId: string;
   postTitle: string;
   querykey: string;
-};
+}
 
 const Controls = (props: ControlsProps) => {
   const { id, user, authorId, postTitle, querykey } = props;

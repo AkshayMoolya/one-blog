@@ -12,11 +12,11 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "../ui/use-toast";
 
-type LikeButtonProps = {
+interface LikeButtonProps {
   likes: Like[];
   user: User | undefined;
   postId: string;
-};
+}
 
 const LikeButton = (props: LikeButtonProps) => {
   const { likes, user, postId } = props;

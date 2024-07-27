@@ -1,7 +1,7 @@
 "use client";
 
 import { type Like, type Post } from "@prisma/client";
-import { Crown, HeartIcon, Shield } from "lucide-react";
+import { HeartIcon, Shield } from "lucide-react";
 import Link from "next/link";
 import { type User } from "next-auth";
 import * as React from "react";
@@ -11,7 +11,7 @@ import UserAvatar from "./user-avatar";
 import Controls from "./controls";
 import { formatPostDate } from "@/utilis/format-post-date";
 
-export type PostCardProps = {
+export interface PostCardProps {
   post: Pick<
     Post,
     "id" | "title" | "description" | "published" | "createdAt"
@@ -23,7 +23,7 @@ export type PostCardProps = {
   user?: User | null;
   showAuthor?: boolean;
   queryKey: string;
-};
+}
 
 const PostCard = (props: PostCardProps) => {
   const { post, user, showAuthor = true, queryKey } = props;
@@ -47,10 +47,7 @@ const PostCard = (props: PostCardProps) => {
                 />
                 <span>{author.name}</span>
                 {author.isAdmin && (
-                  <Shield
-                    size={12}
-                    className="text-blue-400 fill-blue-400"
-                  />
+                  <Shield size={12} className="text-blue-400 fill-blue-400" />
                 )}
               </Link>
               <span>·</span>

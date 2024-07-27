@@ -1,7 +1,7 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { getPosts } from "@/actions";
+import { useQuery } from "@tanstack/react-query";
 import PostCard from "./post-card";
 import { type User } from "next-auth";
 import React from "react";
@@ -14,7 +14,7 @@ interface PostsProps {
 const Posts = ({ user }: PostsProps) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["posts"],
-    queryFn: () => getPosts(),
+    queryFn: async () => await getPosts(),
   });
 
   if (isLoading) {
@@ -37,11 +37,13 @@ const Posts = ({ user }: PostsProps) => {
 
   console.log(user?.isAdmin, "user");
 
+  console.log("Data:", data);
   return (
     <div>
-      {data.map((post) => (
-        <PostCard key={post.id} post={post} user={user} queryKey={"posts"} />
-      ))}
+      {data &&
+        data.map((post) => (
+          <PostCard key={post.id} post={post} user={user} queryKey={"posts"} />
+        ))}
     </div>
   );
 };

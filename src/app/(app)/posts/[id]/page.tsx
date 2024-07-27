@@ -1,11 +1,11 @@
 import { getCurrentUser } from "@/lib/get-current-user";
 import UserPost from "./_components/blog-card";
 
-type PostPageProps = {
+interface PostPageProps {
   params: {
     id: string;
   };
-};
+}
 
 const page = async (props: PostPageProps) => {
   const { params } = props;

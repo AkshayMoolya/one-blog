@@ -11,7 +11,6 @@ import React from "react";
 import SafeHtml from "./safe-html";
 import LikeButton from "@/components/shared/like-button";
 import { getPostById } from "@/actions";
-import PostPlaceholder from "@/components/post-placeholder";
 import UserPostPlaceholder from "@/components/user-post-placeholder";
 import { notFound } from "next/navigation";
 

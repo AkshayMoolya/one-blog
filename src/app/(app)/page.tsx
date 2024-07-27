@@ -1,4 +1,3 @@
-import PostPlaceholder from "@/components/post-placeholder";
 import * as React from "react";
 import Posts from "./_component/posts";
 import { getCurrentUser } from "@/lib/get-current-user";

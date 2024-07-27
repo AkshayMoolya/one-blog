@@ -5,12 +5,13 @@ import db from "@/lib/db";
 import { getCurrentUser } from "@/lib/get-current-user";
 
 import Form from "./_components/form";
+import FormWrapper from "./_components/form-warpper";
 
-type EditorPageProps = {
+interface EditorPageProps {
   params: {
     id: string;
   };
-};
+}
 
 export const metadata: Metadata = {
   title: "Editor",
@@ -26,17 +27,17 @@ const EditorPage = async (props: EditorPageProps) => {
     redirect(`/login?redirect=/editor/${id}`);
   }
 
-  const post = await db.post.findUnique({
-    where: {
-      id,
-    },
-  });
+  // const post = await db.post.findUnique({
+  //   where: {
+  //     id,
+  //   },
+  // });
 
-  if (!post) {
-    notFound();
-  }
+  // if (!post) {
+  //   notFound();
+  // }
 
-  return <Form post={post} />;
+  return <FormWrapper id={id} />;
 };
 
 export default EditorPage;

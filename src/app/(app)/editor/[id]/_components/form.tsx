@@ -26,15 +26,15 @@ import { toast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Editor from "./editor";
 
-type FormProps = {
+interface FormProps {
   post: Post;
-};
+}
 
 const Form = (props: FormProps) => {
   const { post } = props;
   const [title, setTitle] = React.useState(post.title);
   const [description, setDescription] = React.useState(post.description);
-  const [content, setContent] = React.useState(post.content);
+  const [content, setContent] = React.useState(post.content || "");
   const [visibility, setVisibility] = React.useState<Visibility>(
     post.visibility
   );
@@ -170,14 +170,6 @@ const Form = (props: FormProps) => {
             }}
           />
         </div>
-        {/* <Editor
-          options={{
-            content,
-          }}
-          onChange={(editor: any) => {
-            setContent(editor.storage.markdown.getMarkdown() as string);
-          }}
-        /> */}
         <Editor
           value={content}
           onChange={(value: string) => setContent(value)}

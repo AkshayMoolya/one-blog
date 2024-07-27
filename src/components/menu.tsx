@@ -16,9 +16,9 @@ import { buttonVariants } from "./ui/button";
 import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 
-type MenuProps = {
+interface MenuProps {
   user: User | undefined;
-};
+}
 
 const Menu = (props: MenuProps) => {
   const { theme, setTheme } = useTheme();

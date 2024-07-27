@@ -7,7 +7,12 @@ import "../style.css";
 import "react-quill/dist/quill.snow.css";
 import styles from "../Editor.module.css";
 
-const Editor = ({ onChange, value }: any) => {
+interface editorProps {
+  onChange: (value: string) => void;
+  value: string;
+}
+
+const Editor = ({ onChange, value }: editorProps) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

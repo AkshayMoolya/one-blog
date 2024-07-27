@@ -5,10 +5,9 @@ import { revalidatePath } from "next/cache";
 
 import db from "@/lib/db";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { ApiError } from "next/dist/server/api-utils";
 
 const handleError = (error: any) => {
-  throw new Error("Something went wrong. Please try again.");
+  throw new Error("Something went wrong. Please try again." + error.message);
 };
 
 const NOT_LOGGED_IN_ERROR = "Not logged in";
@@ -250,6 +249,7 @@ export const getUserPosts = async (id: string) => {
         },
         author: {
           select: {
+            isAdmin: true,
             name: true,
             image: true,
             id: true,
