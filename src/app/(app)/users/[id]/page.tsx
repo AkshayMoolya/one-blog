@@ -1,8 +1,6 @@
-import { type Metadata } from "next";
-import { SITE_URL } from "@/lib/constants";
-import db from "@/lib/db";
 import { getCurrentUser } from "@/lib/get-current-user";
 import UserPosts from "./_components/user-posts";
+import UsersPost from "./_components/user-posts";
 
 type UserPageProps = {
   params: {
@@ -17,7 +15,7 @@ const UserPage = async (props: UserPageProps) => {
 
   return (
     <>
-      <UserPosts user={currentUser} id={id} />
+      <UsersPost user={currentUser} id={id} />
     </>
   );
 };

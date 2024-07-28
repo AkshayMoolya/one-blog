@@ -3,8 +3,9 @@
 import { type Visibility } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-import db from "@/lib/db";
+
 import { getCurrentUser } from "@/lib/get-current-user";
+import { db } from "@/lib/db";
 
 // ignore eslint
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -349,8 +350,6 @@ export const getUsersPosts = async (id: string) => {
         },
       },
     });
-
-    if (!user) throw new Error("User not found");
 
     return user;
   } catch (error) {

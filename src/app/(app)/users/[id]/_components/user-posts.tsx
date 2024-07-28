@@ -1,10 +1,11 @@
 "use client";
+
 import { getUsersPosts } from "@/actions";
 import PostCard from "@/components/shared/post-card";
 import UserAvatar from "@/components/shared/user-avatar";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import UserPostPlaceholder from "@/components/user-post-placeholder";
+
 import { useQuery } from "@tanstack/react-query";
 import { FileIcon } from "lucide-react";
 import { type User } from "next-auth";
@@ -15,7 +16,7 @@ interface UserPostsProps {
   id: string;
 }
 
-const UserPosts = ({ user, id }: UserPostsProps) => {
+const UsersPost = ({ user, id }: UserPostsProps) => {
   const { data, isLoading } = useQuery({
     queryKey: ["GetUserPosts", id],
     queryFn: async () => await getUsersPosts(id),
@@ -108,4 +109,4 @@ const UserPosts = ({ user, id }: UserPostsProps) => {
   );
 };
 
-export default UserPosts;
+export default UsersPost;

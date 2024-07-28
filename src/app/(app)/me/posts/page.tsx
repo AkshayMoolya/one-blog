@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/get-current-user";
 import UserPosts from "./_components/user-posts";
 
+
 export const metadata: Metadata = {
   title: "Your posts",
 };

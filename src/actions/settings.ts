@@ -1,7 +1,8 @@
 "use server";
 
 import { formSchema } from "@/app/(app)/me/settings/_components/form";
-import db from "@/lib/db";
+import { db } from "@/lib/db";
+
 import { getCurrentUser } from "@/lib/get-current-user";
 import { z } from "zod";
 type Values = z.infer<typeof formSchema>;

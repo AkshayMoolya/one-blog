@@ -15,7 +15,7 @@ interface UserPostsProps {
   user: User;
 }
 
-const UserPosts: React.FC<UserPostsProps> = ({ user }) => {
+const UserPosts = ({ user }: UserPostsProps) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["user-posts", user.id],
     queryFn: async () => {
