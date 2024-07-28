@@ -1,3 +1,4 @@
+"use client";
 import DOMPurify from "isomorphic-dompurify";
 
 const SafeHtml = ({ html }: { html: string }) => {

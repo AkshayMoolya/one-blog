@@ -1,3 +1,5 @@
+"use client";
+
 
 import { MoreVerticalIcon } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";

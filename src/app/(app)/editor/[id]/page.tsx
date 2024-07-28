@@ -23,15 +23,6 @@ const EditorPage = async (props: EditorPageProps) => {
     redirect(`/login?redirect=/editor/${id}`);
   }
 
-  // const post = await db.post.findUnique({
-  //   where: {
-  //     id,
-  //   },
-  // });
-
-  // if (!post) {
-  //   notFound();
-  // }
 
   return <FormWrapper id={id} />;
 };
