@@ -19,10 +19,10 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
           disableTransitionOnChange
         >
           {children}
+          <Toaster />
         </ThemeProvider>
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
-      <Toaster />
     </>
   );
 };

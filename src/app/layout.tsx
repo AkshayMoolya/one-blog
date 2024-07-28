@@ -12,22 +12,21 @@ import {
 
 const inter = Inter({ subsets: ["latin"] });
 
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <Providers>
+    <Providers>
+      <html lang="en">
         <body className={inter.className}>
           <Navbar />
           <main className="mx-auto min-h-[calc(100vh-68px)] max-w-4xl px-8 pb-16 pt-24">
             {children}
           </main>
         </body>
-      </Providers>
-    </html>
+      </html>
+    </Providers>
   );
 }

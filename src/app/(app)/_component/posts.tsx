@@ -2,10 +2,11 @@
 
 import { getPosts } from "@/actions";
 import { useQuery } from "@tanstack/react-query";
-import PostCard from "../../../components/shared/post-card";
+
 import { type User } from "next-auth";
 import React from "react";
 import PostPlaceholder from "@/components/post-placeholder";
+import PostCard from "@/components/shared/post-card";
 
 interface PostsProps {
   user: User | null | undefined;
