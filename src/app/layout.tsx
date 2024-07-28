@@ -12,15 +12,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Providers>
-      <html lang="en">
+    <html lang="en">
+      <Providers>
         <body className={inter.className}>
           <Navbar />
           <main className="mx-auto min-h-[calc(100vh-68px)] max-w-4xl px-8 pb-16 pt-24">
             {children}
           </main>
         </body>
-      </html>
-    </Providers>
+      </Providers>
+    </html>
   );
 }
