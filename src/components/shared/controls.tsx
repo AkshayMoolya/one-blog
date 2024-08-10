@@ -48,8 +48,8 @@ const Controls = (props: ControlsProps) => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (id: string) => deletePost(id),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
         queryKey: [`${querykey}`],
         refetchType: "active",
       });

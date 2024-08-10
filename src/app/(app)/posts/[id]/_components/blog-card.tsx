@@ -22,7 +22,7 @@ const Blogcard = ({ id, user }: userPostProps) => {
   console.log(id);
   const { data, isLoading, error } = useQuery({
     queryKey: ["getpostbyid", id],
-    queryFn: async () => await getPostById(id),
+    queryFn: () => getPostById(id),
   });
 
   if (error) {

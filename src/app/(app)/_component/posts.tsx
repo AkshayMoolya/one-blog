@@ -15,7 +15,7 @@ interface PostsProps {
 const Posts = ({ user }: PostsProps) => {
   const { data, isLoading } = useQuery({
     queryKey: ["posts"],
-    queryFn: async () => await getPosts(),
+    queryFn: () => getPosts(),
   });
 
   if (isLoading) {

@@ -18,7 +18,7 @@ interface UserPostsProps {
 const UserPosts = ({ user }: UserPostsProps) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["user-posts", user.id],
-    queryFn: async () => {
+    queryFn: () => {
       return getUserPosts(user.id);
     },
   });

@@ -15,7 +15,7 @@ const FormWrapper = ({ id }: formWrapperProps) => {
   console.log(id);
   const { data, isLoading } = useQuery({
     queryKey: ["getPostById", id],
-    queryFn: async () => await getPostById(id),
+    queryFn: () => getPostById(id),
   });
 
   if (isLoading) {
