@@ -16,12 +16,12 @@ export default function RootLayout({
       <Providers>
         <body className={inter.className}>
           <Navbar />
-          <main className="mx-auto min-h-[calc(100vh-68px)] max-w-4xl px-8 pb-16 pt-24">
+          <main className="mx-auto min-h-[calc(100vh-68px)] max-w-4xl px-4 pb-16 pt-20 lg:pt-24">
             {children}
-          </main> 
+          </main>
           <Footer />
         </body>
       </Providers>
     </html>
-  );  
+  );
 }
