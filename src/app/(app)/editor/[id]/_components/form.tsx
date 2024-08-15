@@ -42,17 +42,36 @@ const Form = (props: FormProps) => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const saveMutation = useMutation({
-    mutationFn: (published: boolean) =>
-      savePost(post.id, title, content, description, published),
+  const saveDraftMutation = useMutation({
+    mutationFn: () => savePost(post.id, title, content, description, false),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["posts"],
       });
       toast({
-        title: "Post saved",
-        description: "Your changes have been saved",
+        title: "Draft saved",
+        description: "Your changes have been saved as a draft",
       });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "An error occurred",
+        description: error.message,
+      });
+    },
+  });
+
+  const publishMutation = useMutation({
+    mutationFn: () => savePost(post.id, title, content, description, true),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["posts"],
+      });
+      toast({
+        title: "Post published",
+        description: "Your post has been published",
+      });
+      router.push(`/posts/${post.id}`);
     },
     onError: (error: Error) => {
       toast({
@@ -90,7 +109,7 @@ const Form = (props: FormProps) => {
       });
     }
 
-    saveMutation.mutate(false);
+    saveDraftMutation.mutate();
   };
 
   const handleSaveSettingsIcon = async () => {
@@ -105,11 +124,7 @@ const Form = (props: FormProps) => {
       });
     }
 
-    saveMutation.mutate(true, {
-      onSuccess: () => {
-        router.push(`/posts/${post.id}`);
-      },
-    });
+    publishMutation.mutate();
   };
 
   return (
@@ -140,7 +155,7 @@ const Form = (props: FormProps) => {
                 </SelectContent>
               </Select>
               <div className="flex justify-end">
-                <Button onClick={handleSaveSettingsIcon}>Save</Button>
+                <Button variant={"custom"} onClick={handleSaveSettingsIcon}>Save</Button>
               </div>
             </DialogContent>
           </Dialog>
@@ -184,10 +199,10 @@ const Form = (props: FormProps) => {
             <Button
               variant={"custom"}
               onClick={handleSave}
-              disabled={saveMutation.isPending}
+              disabled={saveDraftMutation.isPending}
               className="bg-primary"
             >
-              {saveMutation.isPending && (
+              {saveDraftMutation.isPending && (
                 <Loader2Icon size={16} className="mr-2 animate-spin" />
               )}
               Save as draft
@@ -196,9 +211,9 @@ const Form = (props: FormProps) => {
           <Button
             variant={"custom"}
             onClick={handlePublish}
-            disabled={saveMutation.isPending}
+            disabled={publishMutation.isPending}
           >
-            {saveMutation.isPending && (
+            {publishMutation.isPending && (
               <Loader2Icon size={16} className="mr-2 animate-spin" />
             )}
             Publish

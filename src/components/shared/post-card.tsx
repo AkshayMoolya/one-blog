@@ -1,7 +1,7 @@
 "use client";
 
 import { type Like, type Post } from "@prisma/client";
-import { HeartIcon, Shield } from "lucide-react";
+import { BadgeCheck, HeartIcon, Shield } from "lucide-react";
 import Link from "next/link";
 import { type User } from "next-auth";
 import * as React from "react";
@@ -47,7 +47,10 @@ const PostCard = (props: PostCardProps) => {
                 />
                 <span>{author.name}</span>
                 {author.isAdmin && (
-                  <Shield size={12} className="text-blue-400 fill-blue-400" />
+                  <BadgeCheck
+                    size={12}
+                    className="text-blue-400 fill-blue-400"
+                  />
                 )}
               </Link>
               <span>·</span>

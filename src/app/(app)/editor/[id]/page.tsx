@@ -23,7 +23,6 @@ const EditorPage = async (props: EditorPageProps) => {
     redirect(`/login?redirect=/editor/${id}`);
   }
 
-
   return <FormWrapper id={id} />;
 };
 
