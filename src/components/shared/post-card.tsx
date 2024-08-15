@@ -47,10 +47,7 @@ const PostCard = (props: PostCardProps) => {
                 />
                 <span>{author.name}</span>
                 {author.isAdmin && (
-                  <BadgeCheck
-                    size={12}
-                    className="text-blue-400 fill-blue-400"
-                  />
+                  <BadgeCheck size={14} className="text-black fill-blue-500" />
                 )}
               </Link>
               <span>·</span>
