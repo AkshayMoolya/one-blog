@@ -59,11 +59,10 @@ const Blogcard = ({ id, user }: userPostProps) => {
       </div>
       <Link href={`/users/${author.id}`} className="flex items-center gap-3">
         <UserAvatar
-          width={40}
-          height={40}
           src={author.image}
           alt={author.name}
           userId={author.id}
+          className="w-8 h-8"
         />
         <div className="text-sm">
           <div>{author.name}</div>
