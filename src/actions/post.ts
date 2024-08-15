@@ -3,7 +3,6 @@
 import { type Visibility } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-
 import { getCurrentUser } from "@/lib/get-current-user";
 import { db } from "@/lib/db";
 
@@ -218,10 +217,6 @@ export const getPostById = async (id: string) => {
       },
     });
 
-    if (!post) {
-      throw new Error("Post not found");
-    }
-
     return post;
   } catch (error: any) {
     handleError(error);
@@ -262,8 +257,6 @@ export const getUserPosts = async (id: string) => {
         createdAt: "desc",
       },
     });
-
-    if (!posts) throw new Error("Posts not found");
 
     return posts;
   } catch (error: any) {
