@@ -19,14 +19,13 @@ interface userPostProps {
   user: User | undefined;
 }
 const Blogcard = ({ id, user }: userPostProps) => {
-  console.log(id);
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["getpostbyid", id],
     queryFn: () => getPostById(id),
   });
 
-  if (error) {
-    console.error("Error fetching post:", error);
+  if (isError) {
+    console.error("Error fetching post:", isError);
 
     // give a msg to the user that the post is not found
     return notFound();

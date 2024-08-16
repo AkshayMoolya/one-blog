@@ -32,9 +32,6 @@ const Posts = ({ user }: PostsProps) => {
     return <div>No posts found.</div>;
   }
 
-  console.log(user?.isAdmin, "user");
-
-  console.log("Data:", data);
   return (
     <div>
       {data &&

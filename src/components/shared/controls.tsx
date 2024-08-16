@@ -44,8 +44,6 @@ const Controls = (props: ControlsProps) => {
   const [open, setOpen] = React.useState(false);
   const queryClient = useQueryClient();
 
-  console.log(user?.isAdmin);
-
   const { mutate, isPending } = useMutation({
     mutationFn: (id: string) => deletePost(id),
     onSuccess: () => {
