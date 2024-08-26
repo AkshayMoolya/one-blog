@@ -104,7 +104,7 @@ const Controls = (props: ControlsProps) => {
         <AlertDialogContent>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            <span className="text-ellipsis max-w-28">
+            <span className="overflow-hidden text-ellipsis whitespace-nowrap max-w-28">
               &quot;{postTitle}&quot;
             </span>
             will be permanently deleted. This action cannot be undone.
