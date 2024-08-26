@@ -59,8 +59,12 @@ const PostCard = (props: PostCardProps) => {
           href={`/${published ? "posts" : "editor"}/${id}`}
           className="block space-y-2"
         >
-          <h2 className="text-lg font-semibold">{title}</h2>
-          <p className="line-clamp-3 text-muted-foreground">{description}</p>
+          <h2 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-normal">
+            {title}
+          </h2>
+          <p className="line-clamp-3 overflow-hidden text-ellipsis whitespace-normal text-muted-foreground">
+            {description}
+          </p>
         </Link>
         <div className="mt-4 flex items-center gap-2 text-sm">
           <HeartIcon size={20} />
