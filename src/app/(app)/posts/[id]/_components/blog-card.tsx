@@ -53,8 +53,12 @@ const Blogcard = ({ id, user }: userPostProps) => {
         />
       </div>
       <div className="my-8">
-        <h1 className="text-2xl font-bold sm:text-3xl">{title}</h1>
-        <p className="mt-4 text-muted-foreground">{description}</p>
+        <h1 className="text-2xl font-bold sm:text-3xl max-w-3xl whitespace-normal break-words">
+          {title}
+        </h1>
+        <p className="mt-4 text-muted-foreground max-w-3xl whitespace-normal break-words">
+          {description}
+        </p>
       </div>
       <Link href={`/users/${author.id}`} className="flex items-center gap-3">
         <UserAvatar
@@ -71,7 +75,7 @@ const Blogcard = ({ id, user }: userPostProps) => {
         </div>
       </Link>
 
-      <div className="my-8">
+      <div className="my-8 ">
         <SafeHtml html={content || ""} />
       </div>
       <LikeButton likes={likes} user={user} postId={id} />

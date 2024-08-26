@@ -16,7 +16,12 @@ const SafeHtml = ({ html }: { html: string }) => {
     ],
   });
 
-  return <div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />;
+  return (
+    <div
+      className="whitespace-normal break-words"
+      dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+    />
+  );
 };
 
 export default SafeHtml;
