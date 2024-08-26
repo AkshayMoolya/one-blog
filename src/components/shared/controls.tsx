@@ -104,8 +104,10 @@ const Controls = (props: ControlsProps) => {
         <AlertDialogContent>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            &quot;{postTitle}&quot; will be permanently deleted. This action
-            cannot be undone.
+            <span className="text-ellipsis max-w-28">
+              &quot;{postTitle}&quot;
+            </span>
+            will be permanently deleted. This action cannot be undone.
           </AlertDialogDescription>
           <div className="flex justify-between">
             <AlertDialogCancel>Cancel</AlertDialogCancel>
